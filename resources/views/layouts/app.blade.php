@@ -77,7 +77,5 @@
 </body>
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
-<script defer>
-    @yield('script')
-</script>
+@yield('script')
 </html>
