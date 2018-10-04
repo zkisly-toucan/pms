@@ -10,8 +10,7 @@
 <br>
     <div class="box">
         <div class="column is-half">
-
-            <h4 class="title is-4">Projekty</h4>
+            <h4 class="title is-4">{{$group->name}}</h4>
             <div class="field">
                 <input type="text" class='input' v-model="search">
             </div>
@@ -21,7 +20,7 @@
                     <thead>
                     <tr>
                         <th>Nazwa</th>
-                        <th>Właściciel</th>
+                        <th>Wartość</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -29,13 +28,12 @@
                     <tr v-for="group in filteredHGroups">
                         <th v-html="group[0]"></th>
                         <th>@{{ group[1] }}</th>
-                        <th><a class="button" :href="group[2]">Pokaż</a> </th>
                     </tr>
                     </tbody>
 
                 </table>
             </div>
-    </div>
+        </div>
     </div>
 </div>
 @endsection
@@ -45,20 +43,20 @@
         var app = new Vue({
             el: '#app',
             data: {
-                groups: @json($groups),
+                secrets: @json($secrets),
                 search: ''
             },
             computed: {
                 filteredGroups() {
-                    return this.groups.filter(group => {
-                        return group.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
+                    return this.secrets.filter(secret => {
+                        return secret.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
                     })
                 },
 
                 filteredHGroups() {
-                    return this.filteredGroups.map(group => {
-                        let replaced = group.name.replace(this.search, '<span class="has-background-primary">' + this.search + '</span>');
-                        return [replaced, group.owner.name, group.id];
+                    return this.filteredGroups.map(secret => {
+                        let replaced = secret.name.replace(this.search, '<span class="has-background-primary">' + this.search + '</span>');
+                        return [replaced, secret.value];
                     })
                 }
             }

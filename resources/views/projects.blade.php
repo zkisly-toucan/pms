@@ -26,7 +26,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="group in filteredHGroups">
+                    <tr v-for="group in projects">
                         <th v-html="group[0]"></th>
                         <th>@{{ group[1] }}</th>
                         <th><a class="button" :href="group[2]">Pokaż</a> </th>
@@ -55,10 +55,11 @@
                     })
                 },
 
-                filteredHGroups() {
+                projects() {
                     return this.filteredGroups.map(group => {
-                        let replaced = group.name.replace(this.search, '<span class="has-background-primary">' + this.search + '</span>');
-                        return [replaced, group.owner.name, group.id];
+                        //let replaced = group.name.replace(this.search, '<span class="has-background-primary">' + this.search + '</span>');
+                        let replaced = group.name.replace(new RegExp(this.search, 'i'), "<span class='has-background-primary'>$&</span>");
+                        return [replaced, group.owner.name, 'project/' +group.id];
                     })
                 }
             }
