@@ -49,16 +49,32 @@
                 search: ''
             },
             computed: {
+                searchArray() {
+                    return this.search.split(' ');
+                },
                 filteredGroups() {
-                    return this.groups.filter(group => {
-                        return group.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
-                    })
+                    let filterable = this.groups;
+                    this.searchArray.forEach(function (item) {
+                        filterable = filterable.filter(group => {
+                            return group.name.toLowerCase().indexOf(item.toLowerCase()) > -1
+                        })
+                    });
+                    return filterable;
                 },
 
                 projects() {
                     return this.filteredGroups.map(group => {
-                        //let replaced = group.name.replace(this.search, '<span class="has-background-primary">' + this.search + '</span>');
-                        let replaced = group.name.replace(new RegExp(this.search, 'i'), "<span class='has-background-primary'>$&</span>");
+                        let replaced = group.name;
+                        let i=0;
+                        this.searchArray.forEach(function(item){
+                            i++;
+                            replaced = replaced.replace(new RegExp(item, 'i'), "%<$&%>");
+                        });
+                        for(;i>=0;i--){
+                            replaced = replaced.replace("%<", "<span class='has-background-primary'>");
+                            replaced = replaced.replace("%>", "</span>");
+                        }
+
                         return [replaced, group.owner.name, 'project/' +group.id];
                     })
                 }

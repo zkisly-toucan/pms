@@ -25,7 +25,7 @@ class GroupController extends Controller
      */
     public function index()
     {
-        $groups = Group::with('owner')->get();
+        $groups = Group::with('owner')->with('secrets')->get();
         return view('projects')->with('groups', $groups);
     }
 
