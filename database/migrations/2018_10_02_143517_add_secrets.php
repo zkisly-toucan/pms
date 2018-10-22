@@ -16,6 +16,7 @@ class AddSecrets extends Migration
         Schema::create('types', function(Blueprint $table){
             $table->increments('id')->index();
             $table->string('name');
+            $table->timestamps();
         });
 
         Schema::create('groups', function(Blueprint $table){
@@ -24,6 +25,7 @@ class AddSecrets extends Migration
             $table->integer('level')->default(10);
             $table->boolean('private')->default(true);
             $table->string('name');
+            $table->timestamps();
         });
 
         Schema::create('secrets', function(Blueprint $table){
@@ -32,6 +34,7 @@ class AddSecrets extends Migration
             $table->integer('type_id');
             $table->string('name');
             $table->mediumText('value');
+            $table->timestamps();
         });
 
         Schema::create('requests', function(Blueprint $table){
@@ -39,6 +42,7 @@ class AddSecrets extends Migration
             $table->integer('group_id');
             $table->integer('user_id');
             $table->integer('status');
+            $table->timestamps();
         });
 
         Schema::create('accesses', function(Blueprint $table){
@@ -46,6 +50,7 @@ class AddSecrets extends Migration
             $table->integer('group_id');
             $table->integer('user_id');
             $table->boolean('edit');
+            $table->timestamps();
         });
 
     }

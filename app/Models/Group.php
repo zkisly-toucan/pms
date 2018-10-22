@@ -8,6 +8,7 @@ class Group extends Model
 {
     protected $appends = ['owner', 'secrets'];
     protected $fillable = ['owner_id', 'name', 'level', 'private'];
+    protected $guarded = ['id'];
     public $timestamps = false;
 
     public function owner(){
