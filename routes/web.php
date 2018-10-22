@@ -11,6 +11,8 @@
 |
 */
 
+Route::get('/api/groups', 'GroupController@apiGroup');
+Route::post('/api/group/add', 'GroupController@addGroup');
 Route::get('/', function () {
     return view('welcome');
 });

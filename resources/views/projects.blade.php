@@ -35,18 +35,25 @@
 
                 </table>
             </div>
-    </div>
+            <b-field label="Dodaj projekt">
+                <b-input expanded v-model="groupName"></b-input>
+                <p class="control">
+                    <button class="button is-success" @click="addGroup">Dodaj</button>
+                </p>
+            </b-field>
+        </div>
     </div>
 </div>
 @endsection
 
 @section('script')
     <script defer>
-        var app = new Vue({
+        let app = new Vue({
             el: '#app',
             data: {
-                groups: @json($groups),
-                search: ''
+                groups: [],
+                search: '',
+                groupName: ''
             },
             computed: {
                 searchArray() {
@@ -78,6 +85,47 @@
                         return [replaced, group.owner.name, 'project/' +group.id];
                     })
                 }
+            },
+
+            methods: {
+                loadGroups(){
+                    axios.get('/api/groups')
+                        .then(response => {
+                            // handle success
+                            this.groups = response.data;
+                        })
+                        .catch(function (error) {
+                            // handle error
+                            console.log('error');
+                            console.log(error);
+                        })
+                        .then(function () {
+                            // always executed
+                        });
+                },
+                addGroup(){
+
+                    axios.post('/api/group/add', {
+                            name: this.groupName
+                        })
+                        .then(response=> {
+                            // handle success
+                            this.loadGroups();
+                            this.groupName = '';
+                        })
+                        .catch(function (error) {
+                            // handle error
+                            console.log('error');
+                            console.log(error);
+                        })
+                        .then(function () {
+                            // always executed
+                        });
+                }
+            },
+
+            mounted(){
+               this.loadGroups();
             }
         });
     </script>

@@ -14,12 +14,12 @@ class AddSecrets extends Migration
     public function up()
     {
         Schema::create('types', function(Blueprint $table){
-            $table->integer('id')->index();
+            $table->increments('id')->index();
             $table->string('name');
         });
 
         Schema::create('groups', function(Blueprint $table){
-            $table->integer('id')->index();
+            $table->increments('id')->index();
             $table->integer('owner_id');
             $table->integer('level')->default(10);
             $table->boolean('private')->default(true);
@@ -27,7 +27,7 @@ class AddSecrets extends Migration
         });
 
         Schema::create('secrets', function(Blueprint $table){
-            $table->integer('id')->index();
+            $table->increments('id')->index();
             $table->integer('group_id');
             $table->integer('type_id');
             $table->string('name');
@@ -35,14 +35,14 @@ class AddSecrets extends Migration
         });
 
         Schema::create('requests', function(Blueprint $table){
-            $table->integer('id')->index();
+            $table->increments('id')->index();
             $table->integer('group_id');
             $table->integer('user_id');
             $table->integer('status');
         });
 
         Schema::create('accesses', function(Blueprint $table){
-            $table->integer('id')->index();
+            $table->increments('id')->index();
             $table->integer('group_id');
             $table->integer('user_id');
             $table->boolean('edit');

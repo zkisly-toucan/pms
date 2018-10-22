@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Group extends Model
 {
     protected $appends = ['owner', 'secrets'];
+    protected $fillable = ['owner_id', 'name', 'level', 'private'];
+    public $timestamps = false;
 
     public function owner(){
         return $this->belongsTo('App\User');
@@ -21,6 +23,6 @@ class Group extends Model
     }
 
     protected function getSecretsAttribute(){
-        return $this->secrets();
+        return 1;//$this->secrets();
     }
 }
